@@ -1,0 +1,9 @@
+1.修改了文件，并没有使用add提交到暂存区
+git checkout -- file
+
+2.修改了文件，并使用add提交到暂存区
+git reset HEAD <file>
+git checkout -- file
+
+3.修改了文件，并使用add提交到暂存区,并且commit了版本
+git reset --hard <version>
