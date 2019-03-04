@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>闭包例子</title>
+</head>
+
+<body>
+    <script>
+        // demo1 当函数执行的时候，其他作用域的自由变量i的值为3
+        // var data = [];
+
+        // for (var i = 0; i < 3; i++) {
+        //     data[i] = function() {
+        //         console.log(i);
+        //     };
+        // }
+
+        // data[0]();
+        // data[1]();
+        // data[2]();
+
+
+        // demo2 闭包方式
+        // var data = [];
+
+        // for (var i = 0; i < 3; i++) {
+        //     data[i] = (function(i) {
+        //         return function() {
+        //             console.log(i);
+        //         }
+        //     })(i)
+        // }
+
+        // data[0]();
+        // data[1]();
+        // data[2]();
+
+
+        // demo3
+        // var data = [];
+
+        // var _loop = function _loop(i) {
+        //     data[i] = function () {
+        //         console.log(i);
+        //     };
+        // };
+
+        // for (var i = 0; i < 3; i++) {
+        //     _loop(i);
+        // }
+
+        // data[0]();
+        // data[1]();
+        // data[2]();
+
+
+        // demo4 let添加了块级做用域，let不会成为全局对象的属性
+        var data = [];
+
+        for (let i = 0; i < 3; i++) {
+            data[i] = function () {
+                console.log(i);
+            };
+        }
+
+        data[0]();
+        data[1]();
+        data[2]();
+    </script>
+</body>
+
+</html>
