@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <pre>
+    /**
+     * 以对象的方式调用
+     */
+    var Utils = {
+        checkUserName: function() {
+            console.log('Utils->checkUserName');
+        },
+        checkUserEmail: function() {
+            console.log('Utils->checkUserEmail');
+        },
+        checkUserPwd: function() {
+            console.log('Utils->checkUserPwd');
+        }
+    }
+
+    Utils.checkUserEmail();
+
+    /**
+     * 使用构造函数方式，问题是这种情况不会共用函数
+     */
+    var Util = function() {
+        this.checkUserName = function() {
+            console.log('userName');
+        };
+        this.checkUserEmail = function() {
+            console.log('userEmail');
+        };
+        this.checkUserPwd = function() {
+            console.log('userPwd');
+        };
+    }
+
+    var oUtil1 = new Util();
+    var oUtil2 = new Util();
+    console.log(oUtil1.checkUserEmail === oUtil2.checkUserEmail); //false
+
+    /**
+     * 原型链方式
+     */
+    var Util = function() {};
+    Util.prototype = {
+        checkUserEmail: function() {
+            console.log('userEmail');
+        },
+        checkUserName: function() {
+            console.log('userName');
+        },
+        checkUserPwd: function() {
+            console.log('userPwd');
+        }
+    };
+    var oUtil1 = new Util();
+    var oUtil2 = new Util();
+    console.log(oUtil1.checkUserEmail === oUtil2.checkUserEmail); //true
+
+    /**
+     * 链式调用，需要在方法中返回this
+     */
+    var Util = function() {};
+    Util.prototype = {
+        checkUserEmail: function() {
+            console.log('userEmail');
+            return this;
+        },
+        checkUserName: function() {
+            console.log('userName');
+            return this;
+        },
+        checkUserPwd: function() {
+            console.log('userPwd');
+            return this;
+        }
+    };
+    new Util().checkUserEmail().checkUserName().checkUserPwd();
+
+    /**
+     * 可扩展方法的链式调用
+     */
+    Function.prototype.addMethod = function(name, fn) {
+        this.prototype[name] = fn;
+        return this;
+    };
+
+    var fn1 = function() {};
+
+    fn1.addMethod('checkUserName', function() {
+        console.log('userName:ghostwu');
+        return this;
+    }).addMethod('checkUserEmail', function() {
+        console.log('userEmail');
+        return this;
+    }).addMethod('checkUserPwd', function() {
+        console.log('userUserPwd');
+        return this;
+    });
+    new fn1().checkUserName().checkUserEmail().checkUserPwd();
+    </pre>
+    <script>
+    /**
+     * 以对象的方式调用
+     */
+    var Utils = {
+        checkUserName: function() {
+            console.log('Utils->checkUserName');
+        },
+        checkUserEmail: function() {
+            console.log('Utils->checkUserEmail');
+        },
+        checkUserPwd: function() {
+            console.log('Utils->checkUserPwd');
+        }
+    }
+
+    Utils.checkUserEmail();
+
+    /**
+     * 使用构造函数方式，问题是这种情况不会共用函数
+     */
+    var Util = function() {
+        this.checkUserName = function() {
+            console.log('userName');
+        };
+        this.checkUserEmail = function() {
+            console.log('userEmail');
+        };
+        this.checkUserPwd = function() {
+            console.log('userPwd');
+        };
+    }
+
+    var oUtil1 = new Util();
+    var oUtil2 = new Util();
+    console.log(oUtil1.checkUserEmail === oUtil2.checkUserEmail); //false
+
+    /**
+     * 原型链方式
+     */
+    var Util = function() {};
+    Util.prototype = {
+        checkUserEmail: function() {
+            console.log('userEmail');
+        },
+        checkUserName: function() {
+            console.log('userName');
+        },
+        checkUserPwd: function() {
+            console.log('userPwd');
+        }
+    };
+    var oUtil1 = new Util();
+    var oUtil2 = new Util();
+    console.log(oUtil1.checkUserEmail === oUtil2.checkUserEmail); //true
+
+    /**
+     * 链式调用，需要在方法中返回this
+     */
+    var Util = function() {};
+    Util.prototype = {
+        checkUserEmail: function() {
+            console.log('userEmail');
+            return this;
+        },
+        checkUserName: function() {
+            console.log('userName');
+            return this;
+        },
+        checkUserPwd: function() {
+            console.log('userPwd');
+            return this;
+        }
+    };
+    new Util().checkUserEmail().checkUserName().checkUserPwd();
+
+    /**
+     * 可扩展方法的链式调用
+     */
+    Function.prototype.addMethod = function(name, fn) {
+        this.prototype[name] = fn;
+        return this;
+    };
+
+    var fn1 = function() {};
+
+    fn1.addMethod('checkUserName', function() {
+        console.log('userName:ghostwu');
+        return this;
+    }).addMethod('checkUserEmail', function() {
+        console.log('userEmail');
+        return this;
+    }).addMethod('checkUserPwd', function() {
+        console.log('userUserPwd');
+        return this;
+    });
+    new fn1().checkUserName().checkUserEmail().checkUserPwd();
+    </script>
+</body>
+
+</html>
