@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Promise</title>
+</head>
+
+<body>
+    <pre>
+    // Promise能够简化层层回调的写法，精髓是维护状态和传递状态
+    runAsync1()
+        .then(function(data) {
+            console.log(data);
+            return runAsync2();
+        })
+        .then(function(data) {
+            console.log(data);
+            // return runAsync3();
+            return '直接返回数据';
+        })
+        .then(function(data) {
+            console.log(data);
+        });
+
+    function runAsync1() {
+        var p = new Promise(function(resolve, reject) {
+            //做一些异步操作
+            setTimeout(function() {
+                console.log('异步任务1执行完成');
+                resolve('随便什么数据1');
+            }, 1000);
+        });
+        return p;
+    }
+
+    function runAsync2() {
+        var p = new Promise(function(resolve, reject) {
+            //做一些异步操作
+            setTimeout(function() {
+                console.log('异步任务2执行完成');
+                resolve('随便什么数据2');
+            }, 2000);
+        });
+        return p;
+    }
+
+    function runAsync3() {
+        var p = new Promise(function(resolve, reject) {
+            //做一些异步操作
+            setTimeout(function() {
+                console.log('异步任务3执行完成');
+                resolve('随便什么数据3');
+            }, 2000);
+        });
+        return p;
+    }
+    </pre>
+    <script>
+    // Promise能够简化层层回调的写法，精髓是维护状态和传递状态
+    var promiseData = function() {}
+    promiseData.prototype = {
+        runAsync1: function() {
+            var p = new Promise(function(resolve, reject) {
+                //做一些异步操作
+                setTimeout(function() {
+                    console.log('异步任务1执行完成');
+                    resolve('随便什么数据1');
+                }, 1000);
+            });
+            return p;
+        },
+        runAsync2: function() {
+            var p = new Promise(function(resolve, reject) {
+                //做一些异步操作
+                setTimeout(function() {
+                    console.log('异步任务2执行完成');
+                    resolve('随便什么数据2');
+                }, 2000);
+            });
+            return p;
+        },
+        runAsync3: function() {
+            var p = new Promise(function(resolve, reject) {
+                //做一些异步操作
+                setTimeout(function() {
+                    console.log('异步任务3执行完成');
+                    resolve('随便什么数据3');
+                }, 2000);
+            });
+            return p;
+        }
+    }
+
+    new promiseData().runAsync1().then(function(data) {
+        console.log(data);
+        return new promiseData().runAsync2();
+    }).then(function(data) {
+        console.log(data);
+        return new promiseData().runAsync3();
+    }).then(function(data) {
+        console.log(data);
+    })
+
+    </script>
+</body>
+
+</html>
